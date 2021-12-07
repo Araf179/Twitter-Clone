@@ -4,26 +4,12 @@ import Input from "./Input";
 import { onSnapshot, collection, query, orderBy } from "@firebase/firestore";
 import { db } from "../firebase";
 import { useSession } from "next-auth/react";
+import Post from "./Post";
 
 function Feed() {
   const { data: session } = useSession();
   const [posts, setPosts] = useState([]);
 
-  // MESSY
-  // useEffect(() => {
-  //   const unsubscribe = onSnapshot(
-  //     query(collection(db, "posts"), orderBy("timestamp", "desc")),
-  //     (snapshot) => {
-  //       setPosts(snapshot.docs);
-  //     }
-  //   );
-
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, [db]);
-
-  // CLEAN
   useEffect(
     () =>
       onSnapshot(
@@ -45,6 +31,12 @@ function Feed() {
       </div>
 
       <Input />
+
+      <div className="pb-72">
+        {posts.map((post) => (
+          <Post key={post.id} id={post.id} post={post.data()} />
+        ))}
+      </div>
     </div>
   );
 }

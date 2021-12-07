@@ -34,10 +34,10 @@ function Input() {
     setLoading(true);
 
     const docRef = await addDoc(collection(db, "posts"), {
-      // id: session.user.uid,
-      // username: session.user.name,
-      // userImg: session.user.image,
-      // tag: session.user.tag,
+      id: session.user.uid,
+      username: session.user.name,
+      userImg: session.user.image,
+      tag: session.user.tag,
       text: input,
       timestamp: serverTimestamp(),
     });
@@ -85,7 +85,7 @@ function Input() {
       }`}
     >
       <img
-        src="https://i.picsum.photos/id/775/200/200.jpg?hmac=grKwOZhdVb2YUnQWMrxmqbZG34qFi-xpX5p52cqm2io"
+        src={session.user.image}
         alt=""
         className="h-11 w-11 rounded-full cursor-pointer"
         onClick={signOut}
